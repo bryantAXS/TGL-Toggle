@@ -9,10 +9,10 @@ class Tgl_toggle_mcp
 	public function __construct()
 	{
 		$this->EE =& get_instance();
-		$this->base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=module';
+		$this->base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=Tgl_toggle';
 
 		// update breadcrumbs
-		$this->EE->cp->set_breadcrumb($this->base_url.AMP.'method=index', $this->EE->lang->line('module_module_name'));
+		$this->EE->cp->set_breadcrumb($this->base_url.AMP.'method=index', $this->EE->lang->line('tgl_toggle_module_name'));
 
 		// setup navigation
 		$this->EE->cp->set_right_nav(array(
