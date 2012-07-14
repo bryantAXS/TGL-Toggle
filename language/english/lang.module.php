@@ -2,8 +2,8 @@
 $lang = array(
 
 // Required for MODULES page
-'module_module_name' => 'Module',
-'module_module_description' => 'Brief description of module',
+'module_module_name' => 'Toggle',
+'module_module_description' => 'Toggle different pieces of your template code based on certain conditions.',
 
 //----------------------------------------
 

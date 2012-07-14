@@ -1,6 +1,6 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Module_upd
+class Tgl_toggle
 {
 	public $version = '1.0';
 

@@ -1,6 +1,6 @@
 <?php if( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Module_mcp
+class Tgl_toggle_mcp
 {
 	private $EE;
 	private $base_url;
