@@ -15,7 +15,7 @@ class Tgl_toggle_upd
 		$this->EE->load->dbforge();
 
 		$this->EE->db->insert('modules', array(
-			'module_name' => 'Toggle',
+			'module_name' => 'Tgl_toggle',
 			'module_version' => $this->version,
 			'has_cp_backend' => 'y',
 			'has_publish_fields' => 'n'
@@ -44,6 +44,7 @@ class Tgl_toggle_upd
 
 	public function uninstall()
 	{
+
 		$this->EE->load->dbforge();
 		
 		$this->EE->db->query("DELETE FROM exp_modules WHERE module_name = 'Tgl_toggle'");

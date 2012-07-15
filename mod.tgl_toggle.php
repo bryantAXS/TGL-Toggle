@@ -16,14 +16,13 @@ class Tgl_toggle
 
 		$tagdata = $this->EE->TMPL->tagdata;
 
-		$this->session_value = "diamond";
+		$this->session_value = $this->get_session_value();
 
 		//loop through case parameters and find cause pair value that matches our variable
 		$index = 0;
 
 		foreach ($this->EE->TMPL->var_pair as $key => $val)
 		{
-
 			if(preg_match('/^session*/', $key))
 			{
 
@@ -32,7 +31,7 @@ class Tgl_toggle
 						
 				// define the pattern we're searching for in tagdata that encloses the current case content
 				// make search string safe by replacing any regex in the case values with a marker
-				$pattern = '/{session'.$index.'}(.*){\/session}/Usi';
+				$pattern = '/{session_'.$index.'}(.*){\/session}/Usi';
 				$tagdata = str_replace($key, 'session_'.$index, $tagdata);
 
 				if(isset($val['value']) && $val['value'] == $this->session_value)
@@ -40,16 +39,24 @@ class Tgl_toggle
 
 					$match = true;
 
-					// define the pattern we're searching for in tagdata that encloses the current case content
-					// make search string safe by replacing any regex in the case values with a marker
-					$pattern = '/{session_'.$index.'}(.*){\/session}/Usi';
-					$tagdata = str_replace($key, 'session_'.$index, $tagdata);
-
 					// we've found a match, grab case content and exit loop
 					preg_match($pattern, $tagdata, $matches);
 					$this->return_data = @$matches[1];
 
 				}
+
+				// default value	
+				if(isset($val['default']))
+				{
+					if(strtolower($val['default']) == 'yes' || strtolower($val['default']) == 'true' || $val['default'] == '1')
+					{
+						
+						// found a default, save matched content and continue loop
+						preg_match($pattern, $tagdata, $matches);
+						$default_data = @$matches[1];
+
+					}
+				}	
 
 			}
 			
@@ -57,7 +64,14 @@ class Tgl_toggle
 
 		if($this->return_data === NULL)
 		{
-			$this->return_data = "";
+			if(isset($default_data))
+			{
+				$this->return_data = $default_data;
+			}
+			else
+			{
+				$this->return_data = "";
+			}
 		}
 
 	}
@@ -69,7 +83,7 @@ class Tgl_toggle
 	 */
 	public function get_session_value()
 	{
-		return $this->session_value;
+		return $this->EE->input->cookie("tgl_toggle_session_value") === false ? "" : $this->EE->input->cookie("tgl_toggle_session_value");
 	}
 
 }
