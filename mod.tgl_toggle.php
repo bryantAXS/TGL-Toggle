@@ -62,6 +62,7 @@ class Tgl_toggle
 			
 		}
 
+		//if we didn't find anying, either set the default'ed piece of content or return nothing
 		if($this->return_data === NULL)
 		{
 			if(isset($default_data))
@@ -76,6 +77,22 @@ class Tgl_toggle
 
 	}
 
+	public function session()
+	{
+
+		$tagdata = $this->EE->TMPL->tagdata;
+		$value = $this->EE->TMPL->fetch_param("value");
+		$this->session_value = $this->get_session_value();
+
+		if($value == $this->session_value)
+		{
+			return $tagdata;
+		}
+
+		return "";
+
+	}
+
 	/**
 	 * Returns the value of the session value we are able to set - this can be used to add to the body class 
 	 * to handle value-specific styling.	 
@@ -83,7 +100,21 @@ class Tgl_toggle
 	 */
 	public function get_session_value()
 	{
-		return $this->EE->input->cookie("tgl_toggle_session_value") === false ? "" : $this->EE->input->cookie("tgl_toggle_session_value");
+
+		$cache_value = $this->EE->session->cache('tgl_toggle','session_value');
+		if(empty($cache_value)){
+			$cache_value = false;
+		}
+		
+		if($cache_value)
+		{
+			return $cache_value;
+		}
+		else
+		{
+			return  $this->EE->input->cookie("tgl_toggle_session_value") === false ? "" : $this->EE->input->cookie("tgl_toggle_session_value");
+		}
+
 	}
 
 }

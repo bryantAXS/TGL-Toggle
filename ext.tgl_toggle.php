@@ -70,13 +70,14 @@ class Tgl_toggle_ext {
      * @param 
      * @return 
      */
-    public function sessions_start()
+    public function sessions_start($session)
     {
         // Add Code for the sessions_start hook here.  
-        
+
         if(isset($_GET['session']))
         {
             $this->EE->functions->set_cookie("tgl_toggle_session_value", $_GET["session"], 604800); //one week
+            $session->set_cache('tgl_toggle','session_value', $_GET["session"]);
         }
 
     }
